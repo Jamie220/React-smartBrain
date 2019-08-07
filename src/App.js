@@ -27,11 +27,10 @@ const ParticlesOption = {
     }
   }
 }
+
 const app = new Clarifai.App({
   apiKey: '06ee0220ffed42bb9c0b22e2b0cba377'
 });
-
-
 
 class App extends React.Component {
   constructor() {
@@ -46,7 +45,7 @@ class App extends React.Component {
 
   calculateFaceLocation = (data) => {
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-    const image = document.getElementById('inputImage');
+    const image = document.getElementById('inputimage');
     const width = Number(image.width);
     const height = Number(image.height);
     return {
@@ -57,19 +56,14 @@ class App extends React.Component {
     }
   }
 
-  drawFaceBox = (faceBox) => {
-    this.setState({ box: faceBox });
+  drawFaceBox = (box) => {
+    console.log(box);
+    this.setState({ box: box });
   }
-
-
 
   onChangeInput = (events) => {
     this.setState({ input: events.target.value });
   }
-
-
-
-
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
