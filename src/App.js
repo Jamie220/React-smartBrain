@@ -5,7 +5,8 @@ import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import Signin from './components/Signin/Signin'
+import Signin from './components/Signin/Signin';
+import Register from './components/Register/Register';
 import Clarifai from 'clarifai';
 import './App.css';
 
@@ -78,12 +79,8 @@ class App extends React.Component {
       .catch((err) => console.log(err));// do something with error   
   }
 
-  onRouteChange = () =>{
-    this.setState({route:'home'});
-  }
-
-  backSignin = () =>{
-    this.setState({route: 'signin'})
+  onRouteChange = (route) =>{
+    this.setState({route: route});
   }
 
 
@@ -92,10 +89,9 @@ class App extends React.Component {
       <div className="App">
         <Particles className="particles"
           params={ParticlesOption} />
-        <Navigation backSignin={this.backSignin} />
-        { this.state.route === 'signin'
-          ?<Signin onRouteChange = {this.onRouteChange}/>
-          :<div>
+        <Navigation onRouteChange={this.onRouteChange} />
+        { this.state.route === 'home'
+          ?<div>
           <Logo />
           <Rank />
           <ImageLinkForm
@@ -103,6 +99,13 @@ class App extends React.Component {
             onButtonSubmit={this.onButtonSubmit} />
           <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
         </div>
+        :(
+          this.state.route  === 'signin'
+          ?<Signin onRouteChange = {this.onRouteChange}/>
+          :<Register onRouteChange = {this.onRouteChange}/>
+        )
+          
+          
         }
       </div>
     );
